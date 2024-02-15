@@ -37,4 +37,12 @@ curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/insta
 golangci-lint run ./...
 ```
 
-В других ветках можно посмотреть более глубокие попытки тестирования кода, Dockerfile и тп.
+Запустить симулятор:
+```
+go run -race cmd/simulator/main.go
+```
+
+Запустить симулятор в докере:
+```
+docker build -t sim . && docker run -p 8080:8080 sim
+```
