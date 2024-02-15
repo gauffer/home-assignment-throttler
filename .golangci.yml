@@ -1,0 +1,44 @@
+linters-settings:
+  govet:
+    check-shadowing: true
+  usused:
+    min-confidence: 0.8
+  gofmt:
+    simplify: true
+  gocyclo:
+    min-complexity: 15
+
+linters:
+  enable:
+    - govet
+    - gofmt
+    - gocyclo
+    - goimports
+    - errcheck
+    - staticcheck
+    - unused
+    - unconvert
+    - ineffassign
+    - unused
+    - typecheck
+    - misspell
+    - lll
+    - gosec
+  disable:
+    - dupl
+    - gocritic
+
+issues:
+  exclude-use-default: false
+
+run:
+  concurrency: 4
+  deadline: 5m
+  build-tags:
+    - mytag
+  skip-dirs:
+    - vendor
+    - .git
+    - node_modules
+    - tmp
+
