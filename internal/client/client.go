@@ -13,6 +13,7 @@ import (
 
 const maxRetries = 5
 
+// BatchProcessError helps the client to keep track of processed items.
 type BatchProcessError struct {
 	Processed int
 	Err       error
@@ -26,7 +27,9 @@ func (e *BatchProcessError) Unwrap() error {
 	return e.Err
 }
 
-// Client wraps the service.Service with enhanced batch processing capabilities.
+// Client is the struct that implements the logic of the communication with the service.
+// The client is capable of processing items in batches and allows mupltiple attempts to do that. 
+// See: const maxRetries.
 type Client struct {
 	service service.Service
 }
@@ -35,6 +38,11 @@ func NewClient(service service.Service) *Client {
 	return &Client{service: service}
 }
 
+// ProcessBatchesWithRetry wraps call to the ProcessBatchesInternal.
+// It will check limits of the serice and attempt to process data in batches.
+// In case of an expected error it will check limits again, 
+// and then try again.
+// See: const maxRetries
 func (c *Client) ProcessBatchesWithRetry(
 	ctx context.Context,
 	items []service.Item,
